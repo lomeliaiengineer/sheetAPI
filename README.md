@@ -19,12 +19,15 @@ API created to store data in google sheet documents.
     },
     "timezone": "Asia/Dubai",
     "data": {
-        "phone": "phon2e",
-        "service": "ser1",
-        "option": "s2",
-        "days": "42"
+        "data": [
+            "123456",
+            "Maria",
+            "12-02-10",
+        ]
     },
     "sheet": "SHEETNAME",
     "spreadsheetId": "SHEETID"
 }
 ```
+
+![alt text](https://res.cloudinary.com/dtk5ti5tj/image/upload/v1677608828/gsint_sovbud.png)
