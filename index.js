@@ -2,11 +2,13 @@ const { google } = require('googleapis');
 const moment = require('moment-timezone');
 const express = require('express');
 const app = express();
+const ngrok = require('ngrok');
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
 app.post('/saveDate', (req, res) => {
+    console.log(req.body);
     let {serviceAccount, timezone, data, sheet, spreadsheetId} = req.body
     saveDataSheet(serviceAccount, timezone, data, sheet, spreadsheetId, resp => {
         res.send(resp);
@@ -27,7 +29,7 @@ function saveDataSheet(serviceAccount, timezone = 'Asia/Dubai', data, sheet, spr
     console.log('save data in google sheet')
     let range = `${sheet}!A1`;
 
-    let resArray = [moment().tz(timezone), data.phone, data.service, data.option, data.days];
+    let resArray = [moment().tz(timezone), ...data.data];
 
     sheets.spreadsheets.values.append({
         auth: serviceAccountAuth,
@@ -52,4 +54,8 @@ function saveDataSheet(serviceAccount, timezone = 'Asia/Dubai', data, sheet, spr
         });
 }
 
-app.listen(port, () => console.log('Server running'));
+app.listen(port, async () => {
+    const url = await ngrok.connect(port);
+    console.log(`Server running on ${url}`);
+  
+  })
